@@ -66,11 +66,16 @@ function game() {
 }
 
 function update() {
+		var d = new Date();
+		var n = d.getTime();
 		var res = httpGet("game.php?ACT=move&x=" + x + "&y=" + y);
 		if (res == "ERR_TOO_FAST") {
 			console.log("FAST");
 		}
 		var map = httpGet("game.php?ACT=getM&w=" + blocksx + "&h=" + blocksy + "&x=" + x + "&y=" + y);
+		var d2 = new Date();
+		var n2 = d2.getTime();
+		calc = n2 - n;
 		map = map.split("|");
 		var curr = 0;
 			var tw = 0;
@@ -89,11 +94,9 @@ function update() {
 	tw = 0;
 	th = th + 50;
 
-			canvas.fillStyle = "white";
-			canvas.font = "12px Roboto";
-			canvas.fillText(x + ", " + y, 20, 20);
-	}
 
+	}
+document.getElementById("fps").innerHTML = "<center>DEBUG</center>" + calc + " ms<br>" + fps + " FPS<br>" + "<b>Position: </b>" + x + ", " + y;
 
 }
 

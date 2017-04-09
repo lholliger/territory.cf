@@ -1,5 +1,5 @@
 <head>
-	<link rel='stylesheet' type='text/css' href='territory.css?rev=8'>
+	<link rel='stylesheet' type='text/css' href='territory.css?rev=11'>
 	<title>Territory - beta</title>
 </head>
 <body>
@@ -18,10 +18,16 @@
   </div>
 </div>
 	<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
+<div class='overlay' id='fps'></div>
 </body>
 
-<script src='territory.js?rev=9'></script>
+<script src='territory.js?rev=15'></script>
 <script>
 game();
 update();
+var m = 0;
+var fps = 0;
+var calc = 0;
+setInterval(function() { m++; }, 1);
+setInterval(function() { fps = m; document.getElementById("fps").innerHTML = "<center>DEBUG</center>" + calc + " ms<br>" + fps + " FPS<br>" + "<b>Position: </b>" + x + ", " + y; m = 0; }, 1000);
 </script>
