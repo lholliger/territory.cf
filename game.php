@@ -69,6 +69,8 @@ if ($act == "getM") {
 	$current_x = $_GET['x'];
 	$current_y = -$_GET['y'];
 
+	$uresy = $_GET['y'];
+
 	$corner_x = round($current_x - ($width / 2));
 	$corner_y = round($current_y + ($height / 2));
 
@@ -84,7 +86,11 @@ if ($act == "getM") {
 			if (file_get_contents("../map/" . $xc . ";" . $yc) == "") {
 			echo "1e1e1e|";
 			} else {
+			if ($xc == $current_x && $yc == $uresy) {
+			echo "767676|";
+			} else {
 			echo file_get_contents("../data/" . file_get_contents("../map/" . $xc . ";" . $yc) . "/color") . "|";
+			}
 			}
 			$rx++;
 		}
