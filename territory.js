@@ -1,34 +1,21 @@
-var x,y,c,width,height,blocksx,blocksy
-function start() {
-	document.getElementById("mediaplay").innerHTML = "<h1>Loading game...</h1><p>Be patient!</p>";
-	x = httpGet("game.php?ACT=getX");
-	y = httpGet("game.php?ACT=getY");
-	c = httpGet("game.php?ACT=getC");
-	document.getElementById("overlay").innerHTML = "<b>Location: </b> (" + x + "," + y + ")<br><b>Score: </b>" + httpGet("game.php?ACT=getO");
-	width = document.getElementById("main").clientWidth;
-	height = document.getElementById("main").clientHeight;
-	console.log(width);
-	console.log(height);
-	document.getElementById("game").innerHTML = "";
-	blocksx = Math.round(width / 50 - 1);
-	blocksy = Math.round(height / 50);
-
-	for (var i = 0; i < blocksy; i++) {
-		for (var b = 0; b < blocksx; b++) {
-			document.getElementById("game").innerHTML += "<div class='block' id='" + b + ";" + i + "'> </div>";
-		}
-	console.log("newline");
-	document.getElementById("game").innerHTML += "<br>"; 
-	}
-
-	
-	document.getElementById(Math.round(blocksx / 2 - 1) + ";" + Math.round(blocksy / 2 - 1)).className = "block-you";
-	console.log(c);
-	document.getElementById(Math.round(blocksx / 2 - 1) + ";" + Math.round(blocksy / 2 - 1)).style.border = "5px solid #" + c;
-	console.log();
-	update();
-
+function unlock() {
+open = true;
+document.getElementById('pop').innerHTML = '';
 }
+
+var open = false;
+
+var c = document.getElementById('game'),
+canvas = c.getContext('2d');
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+canvas.beginPath();
+canvas.rect(0, 0, window.innerWidth, window.innerHeight);
+canvas.fillStyle = "#1e1e1e";
+canvas.fill();
+
+var x,y,c,width,height,blocksx,blocksy
+
 function httpGet(theUrl)
 {
     var xmlHttp = new XMLHttpRequest();
@@ -36,8 +23,49 @@ function httpGet(theUrl)
     xmlHttp.send( null );
     return xmlHttp.responseText;
 }
+
+
+function game() {
+	x = httpGet("game.php?ACT=getX");
+	y = httpGet("game.php?ACT=getY");
+	c = httpGet("game.php?ACT=getC");
+
+	document.getElementById("game-pos").innerHTML = "<b>Location</b><br>" + x + ", " + y;
+
+	document.getElementById("game-score").innerHTML = "<b>Current Score</b><br>" + httpGet("game.php?ACT=getO") + " blocks";
+
+	document.getElementById("game-button").style.backgroundColor = "#" + c;
+	width = window.innerWidth;
+	height = window.innerHeight;
+	console.log(width);
+	console.log(height);
+	document.getElementById("game").innerHTML = "";
+	blocksx = Math.round(width / 50 - 1);
+	blocksy = Math.round(height / 50);
+
+	var tw = 0;
+	var th = 0;
+
+			canvas.beginPath();
+			canvas.rect(0, 0, 50, 50);
+			canvas.fillStyle = "purple";
+			canvas.fill();
+
+	for (var i = 0; i < blocksy; i++) {
+		for (var b = 0; b <= blocksx; b++) {
+			canvas.beginPath();
+			canvas.rect(tw, th, tw + 50, th + 50);
+			canvas.fillStyle = "#1e1e1e";
+			canvas.fill();
+			tw = tw + 50;
+		}
+	console.log("newline");
+	tw = 0;
+	th = th + 50;
+	}
+}
+
 function update() {
-	document.getElementById("overlay").innerHTML = "<b>Location: </b> (" + x + "," + y + ")<br><b>Score: </b>" + httpGet("game.php?ACT=getO");
 		var res = httpGet("game.php?ACT=move&x=" + x + "&y=" + y);
 		if (res == "ERR_TOO_FAST") {
 			console.log("FAST");
@@ -45,25 +73,32 @@ function update() {
 		var map = httpGet("game.php?ACT=getM&w=" + blocksx + "&h=" + blocksy + "&x=" + x + "&y=" + y);
 		map = map.split("|");
 		var curr = 0;
+			var tw = 0;
+			var th = 0;
 	for (var i = 0; i < blocksy; i++) {
 		for (var b = 0; b < blocksx; b++) {
 			var space = map[curr];
-			if (space.charAt(0) == "U") {
-			space = space.substr(1);
-			document.getElementById(b + ";" + i).style.backgroundColor = space;
-			document.getElementById(b + ";" + i).style.border = "5px solid #" + space;
-			} else {
-			document.getElementById(b + ";" + i).style.backgroundColor = space;
-			document.getElementById(b + ";" + i).style.border = "5px solid #1e1e1e";
-	document.getElementById(Math.round(blocksx / 2 - 1) + ";" + Math.round(blocksy / 2)).style.border = "5px solid #" + c;
-			}
+			canvas.beginPath();
+			canvas.rect(tw, th, tw + 50, th + 50);
+			canvas.fillStyle = "#" + space;
+			canvas.fill();
+
+			tw = tw + 50;
 			curr++;
 		}
+	tw = 0;
+	th = th + 50;
+
+			canvas.fillStyle = "white";
+			canvas.font = "12px Roboto";
+			canvas.fillText(x + ", " + y, 20, 20);
 	}
 
 
 }
+
 function move(d) {
+	if (open == true) {
 	if (d == 1) {
 		y++;
 		update();
@@ -80,6 +115,7 @@ function move(d) {
 		x++;
 		update();
 	}
+}
 }
 
 
@@ -101,3 +137,4 @@ function move(d) {
 	}
 	document.onkeydown = checkKey;
 	
+

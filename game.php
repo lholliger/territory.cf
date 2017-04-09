@@ -82,7 +82,7 @@ if ($act == "getM") {
 			$xc = ($x_loop + $corner_x);
 			$yc = ($y_loop - $corner_y);
 			if (file_get_contents("../map/" . $xc . ";" . $yc) == "") {
-			echo "686868|";
+			echo "1e1e1e|";
 			} else {
 			echo file_get_contents("../data/" . file_get_contents("../map/" . $xc . ";" . $yc) . "/color") . "|";
 			}

@@ -1,55 +1,27 @@
 <head>
-	<title>Territory</title>
-	<script src='territory.js?rev=3'></script>
-	<link rel='stylesheet' type='text/css' href='territory.css'>
+	<link rel='stylesheet' type='text/css' href='territory.css?rev=8'>
+	<title>Territory - beta</title>
 </head>
-<body id='main'>
-<center>
-	<div id='game'>
-
-<div class="outer">
+<body>
+<div class="outer" id='pop'>
   <div class="middle">
     <div class="inner" id='mediaplay'>
-
+<center>
       <h1>Territory</h1>
-
       <p>Claim it all!</p>
-	<p>Im still making this start menu...</p>
-	<button onclick="start()">Begin</button>
-
+	<hr>
+	<div id='game-pos'></div><br>
+	<div id='game-score'></div><br>
+	<button onclick="unlock();" id='game-button'>Begin</button>
+</center>
     </div>
   </div>
 </div>
-
-<style>
-
-.outer {
-    display: table;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
-
-.middle {
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.inner {
-    margin-left: auto;
-    margin-right: auto; 
-    width: 200px;
-    background-color: white;
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
-}
-</style>
-	</div>
-</center>
-<div id='overlay'></div>
+	<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
 </body>
 
+<script src='territory.js?rev=9'></script>
 <script>
-//start();
+game();
+update();
 </script>

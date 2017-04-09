@@ -3,38 +3,39 @@
 	font-family: 'Roboto', sans-serif;
 }
 body {
-	margin: 0;
-	padding: 0;
-	min-height: 100%;
-	width: 100%;
-	background-color: #1e1e1e;
-}
-#overlay {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	background:rgba(0,0,0,0.5); 
-	margin: 1%;
-	padding: 0.5%;
-	color: white;
-}
-.block {
-	width: 40px;
-	height: 40px;
-	border: 5px solid #1e1e1e;
-	background-color: #686868;
-	float: left;
+padding: 0;
+margin: 0;
+width: 100%;
+height: 100%;
 }
 
-.block-you {
-	width: 40px;
-	height: 40px;
-	border: 5px solid #d80000;
-	background-color: #686868;
-	float: left;
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
-.game {
-	width: 100%;
-	height: 100%;
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
 }
-	</sty
+
+.inner {
+    margin-left: auto;
+    margin-right: auto; 
+    width: 200px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+button {
+	background-color: lightblue;
+	border: none;
+	padding: 10px;
+	margin: 4px;
+	border-radius: 5px;
+	
+}
