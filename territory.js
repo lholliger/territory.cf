@@ -40,28 +40,28 @@ function game() {
 	console.log(width);
 	console.log(height);
 	document.getElementById("game").innerHTML = "";
-	blocksx = Math.round(width / 50 - 1);
-	blocksy = Math.round(height / 50);
+	blocksx = Math.round(width / 40 - 1);
+	blocksy = Math.round(height / 40);
 
 	var tw = 0;
 	var th = 0;
 
 			canvas.beginPath();
-			canvas.rect(0, 0, 50, 50);
+			canvas.rect(0, 0, 40, 40);
 			canvas.fillStyle = "purple";
 			canvas.fill();
 
 	for (var i = 0; i < blocksy; i++) {
 		for (var b = 0; b <= blocksx; b++) {
 			canvas.beginPath();
-			canvas.rect(tw, th, tw + 50, th + 50);
+			canvas.rect(tw, th, tw + 40, th + 40);
 			canvas.fillStyle = "#1e1e1e";
 			canvas.fill();
-			tw = tw + 50;
+			tw = tw + 40;
 		}
 	console.log("newline");
 	tw = 0;
-	th = th + 50;
+	th = th + 40;
 	}
 }
 
@@ -84,15 +84,15 @@ function update() {
 		for (var b = 0; b < blocksx; b++) {
 			var space = map[curr];
 			canvas.beginPath();
-			canvas.rect(tw, th, tw + 50, th + 50);
+			canvas.rect(tw, th, tw + 40, th + 40);
 			canvas.fillStyle = "#" + space;
 			canvas.fill();
 
-			tw = tw + 50;
+			tw = tw + 40;
 			curr++;
 		}
 	tw = 0;
-	th = th + 50;
+	th = th + 40;
 
 
 	}
