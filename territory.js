@@ -1,6 +1,6 @@
 var x,y,c,width,height,blocksx,blocksy
 function start() {
-
+	document.getElementById("mediaplay").innerHTML = "<h1>Loading game...</h1><p>Be patient!</p>";
 	x = httpGet("game.php?ACT=getX");
 	y = httpGet("game.php?ACT=getY");
 	c = httpGet("game.php?ACT=getC");
