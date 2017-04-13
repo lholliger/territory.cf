@@ -41,6 +41,16 @@ button {
 	
 }
 
+.overlay-l {
+	position: absolute;
+	bottom: 0
+	left: 0;
+	background:rgba(0,0,0,0.5); 
+	margin: 1%;
+	padding: 0.5%;
+	color: white;
+}
+
 .overlay {
 	position: absolute;
 	bottom: 0;

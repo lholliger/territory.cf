@@ -1,8 +1,21 @@
 function unlock() {
 open = true;
-document.getElementById('pop').innerHTML = '';
+document.getElementById('pop').style.display = "none";
+}
+function error(num) {
+
+	document.getElementById("game-pos").innerHTML = "";
+
+	document.getElementById("game-score").innerHTML = "";
+if (error == 1) {
+	document.getElementById("infob").innerHTML = "You moved too fast! reload the page";
+}
+if (error == 2) {
+document.getElementById("game-pos").innerHTML = "You moved out of bounds. Go within 1000 and -1000";
 }
 
+document.getElementById('pop').style.display = "block";
+}
 var open = false;
 
 var c = document.getElementById('game'),
@@ -72,6 +85,9 @@ function update() {
 		if (res == "ERR_TOO_FAST") {
 			console.log("FAST");
 		}
+		if (res == "ERR_OUT_BOUND") {
+			console.log("OUT");
+		}
 		var map = httpGet("game.php?ACT=getM&w=" + blocksx + "&h=" + blocksy + "&x=" + x + "&y=" + y);
 		var d2 = new Date();
 		var n2 = d2.getTime();
@@ -96,7 +112,7 @@ function update() {
 
 
 	}
-document.getElementById("fps").innerHTML = "<center>DEBUG</center>" + calc + " ms<br>" + fps + " FPS<br>" + "<b>Position: </b>" + x + ", " + y;
+document.getElementById("fps").innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + ", " + y;
 
 }
 

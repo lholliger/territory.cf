@@ -32,6 +32,7 @@ if ($act == "getC") {
 if ($act == "move") {
 	$x = $_GET['x'];
 	$y = $_GET['y'];
+	if ($x >= 1000 || $y >= 1000 || $x <= -1000 || $y <= -1000) {
 	if ($x == (file_get_contents("$dir/x") + 1) || $x == (file_get_contents("$dir/x") - 1)) {
 		file_put_contents("$dir/x", $x);
 
@@ -59,6 +60,9 @@ if ($act == "move") {
 	}
 	else {
 		echo "ERR_TOO_FAST";
+	}
+	} else {
+		echo "ERR_OUT_BOUND";
 	}
 }
 

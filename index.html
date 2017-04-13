@@ -1,5 +1,6 @@
 <head>
-	<link rel='stylesheet' type='text/css' href='territory.css?rev=11'>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"> 
+	<link rel='stylesheet' type='text/css' href='territory.css?rev=13'>
 	<title>Territory - beta</title>
 </head>
 <body>
@@ -7,8 +8,10 @@
   <div class="middle">
     <div class="inner" id='mediaplay'>
 <center>
+	<div class='infob'>
       <h1>Territory</h1>
       <p>Claim it all!</p>
+	</div>
 	<hr>
 	<div id='game-pos'></div><br>
 	<div id='game-score'></div><br>
@@ -18,16 +21,13 @@
   </div>
 </div>
 	<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
-<div class='overlay' id='fps'></div>
+<div class='overlay' id='fps'>
+</div>
+
 </body>
 
-<script src='territory.js?rev=16'></script>
+<script src='territory.js?rev=19'></script>
 <script>
 game();
 update();
-var m = 0;
-var fps = 0;
-var calc = 0;
-setInterval(function() { m++; }, 1);
-setInterval(function() { fps = m; document.getElementById("fps").innerHTML = "<center>DEBUG</center>" + calc + " ms<br>" + fps + " FPS<br>" + "<b>Position: </b>" + x + ", " + y; m = 0; }, 1000);
 </script>
