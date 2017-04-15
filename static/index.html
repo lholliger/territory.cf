@@ -1,0 +1,36 @@
+<head>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+	<link rel='stylesheet' type='text/css' href='external/territory.css?rev=13'>
+	<title>Territory.cf Beta</title>
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="Territory.cf">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+<div class="outer" id='pop'>
+  <div class="middle">
+    <div class="inner" id='mediaplay'>
+<center>
+	<div class='infob'>
+      <h1>Territory<sup>beta</sup></h1>
+      <p>Claim it all!</p>
+	</div>
+	<hr>
+	<div id='game-pos'>Attempting to recieve information. If you see this for a minute, reload</div><br>
+	<div id='game-score'></div><br>
+	<button onclick="unlock();" id='game-button' disabled>Begin</button>
+</center>
+    </div>
+  </div>
+</div>
+	<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
+<div class='overlay' id='overlay'>
+</div>
+
+</body>
+<script src='external/territory.js?id=OF1'></script>
