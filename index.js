@@ -59,13 +59,17 @@ io.on('connection', function(socket){
     try {
     ocl = fs.readFileSync(__dirname + "/lb/" + color);
   } catch(err) {
+    if (err.code === 'ENOENT') {
     ocl = 0;
     fs.writeFile(__dirname + "/lb/" + color, "0");
   }
+  }
+  console.log(ocl);
   if (ocl == "NaN") {
     ocl = countInArray(map_data, color);
     fs.writeFile(__dirname + "/lb/" + color, ocl);
   }
+
     var rem = parseInt(ocl) + 1;
     fs.writeFile(__dirname + "/lb/" + color, rem);
     removal = claim[0] + "x" + claim[1];
@@ -77,9 +81,12 @@ io.on('connection', function(socket){
       try {
     ocl = fs.readFileSync(__dirname + "/lb/" + rcc[1]);
   } catch(err) {
+    if (err.code === 'ENOENT') {
     fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
     ocl = 0;
   }
+  }
+  console.log(ocl);
   if (ocl == "NaN") {
     ocl = countInArray(map_data, color);
     fs.writeFile(__dirname + "/lb/" + rcc[1], ocl);
