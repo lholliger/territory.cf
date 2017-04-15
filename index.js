@@ -56,11 +56,8 @@ io.on('connection', function(socket){
     var rem = parseInt(ocl) + 1;
     fs.writeFile(__dirname + "/lb/" + color, rem);
     removal = claim[0] + "x" + claim[1];
-    console.log(claim);
-    console.log(removal);
     var rcc = [];
     rcc = map_data.find(loc);
-    console.log(rcc);
 
     var ocl;
     if (rcc != null) {
