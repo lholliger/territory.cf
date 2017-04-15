@@ -31,6 +31,15 @@ io.on('connection', function(socket){
   });
 });
 
+function countInArray(array, what) {
+    var count = 0;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === what) {
+            count++;
+        }
+    }
+    return count;
+}
 
 io.on('connection', function(socket){
   socket.on('move', function(msg){
@@ -53,6 +62,10 @@ io.on('connection', function(socket){
     ocl = 0;
     fs.writeFile(__dirname + "/lb/" + color, "0");
   }
+  if (ocl == "NaN") {
+    ocl = countInArray(map_data, color);
+    fs.writeFile(__dirname + "/lb/" + color, ocl);
+  }
     var rem = parseInt(ocl) + 1;
     fs.writeFile(__dirname + "/lb/" + color, rem);
     removal = claim[0] + "x" + claim[1];
@@ -66,6 +79,10 @@ io.on('connection', function(socket){
   } catch(err) {
     fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
     ocl = 0;
+  }
+  if (ocl == "NaN") {
+    ocl = countInArray(map_data, color);
+    fs.writeFile(__dirname + "/lb/" + rcc[1], ocl);
   }
     var rem = parseInt(ocl) - 1;
     fs.writeFile(__dirname + "/lb/" + rcc[1], rem);
