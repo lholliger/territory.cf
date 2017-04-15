@@ -41,7 +41,18 @@ canvas.fill();
 	}
 
 
+function navch(bar) {
+	if (bar == 1) {
+		document.getElementById("game-pos").innerHTML = "<h3>Credits</h3><br><b>Lead Developer</b><br> <a href='https://github.com/DatOneLefty'>DatOneLefty</a><br><br><b>Game Idea</b><br>Lexumus<br><br><b>Links</b><br><b><a href='https://github.com/DatOneLefty/territory.cf'>Project GitHub</a></b><br><b><a href='https://gitter.im/territory-cf/Lobby'>Project Gitter</a></b>";
+	}
+	if (bar == 2) {
+		document.getElementById("game-pos").innerHTML = "<h3>How To Play</h3>Use WASD or the arrow pad to move around, you will not automatically move<br><br>As you move, you claim territory. But, people can overclaim your territory though.<br><br>You cannot die and if you leave the game and come back, you will return to your exact position and have the same color<br>(Hit begin to start!)";
+	}
+	if (bar == 3) {
+		document.getElementById("game-pos").innerHTML = "<h3>Your info</h3><p><b>X:</b> " + x + "<br><b>Y:</b> " + y + "<br><br><div id='color' style='background-color: " + color + "'>Your Color</div>";
+	}
 
+}
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -79,14 +90,16 @@ id = getCookie("id");
 var x, y, color;
     socket.on('info', function(msg){
 	var inf = msg.split(",");
-	document.getElementById("game-pos").innerHTML = "<b>Position: </b>" + inf[0] + ", " + inf[1];
-	document.getElementById("game-button").style.backgroundColor = inf[2];
-	document.getElementById("game-button").disabled = false;
 	x = inf[0];
 	y = inf[1];
 	y = parseInt(y);
 	x = parseInt(x);
 	color = inf[2];
+	navch(3);
+	document.getElementById("color").style.backgroundColor = color;
+	document.getElementById("game-button").style.backgroundColor = color;
+	document.getElementById("game-button").disabled = false;
+
     });
 
 socket.on('new-info', function(msg){
@@ -94,6 +107,15 @@ socket.on('new-info', function(msg){
 	socket.emit("new-join", getCookie("id"));
 	id = getCookie("id");
     });
+
+		socket.on('leader', function(msg){
+			var lead = msg;
+			var cache = "<b>Top Players</b><br>";
+			lead.forEach(function(entry) {
+				cache = cache + "<font color='" + entry[1] + "'>" + entry[0] + "</font><br>";
+			});
+			document.getElementById("leaderboard").innerHTML = cache;
+		    });
 
 function draw(x2, y2, scol) {
 	var corner_x = Math.round(x - (blocksx / 2));

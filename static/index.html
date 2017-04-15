@@ -12,24 +12,31 @@
 
 </head>
 <body>
+	<center>
 <div class="outer" id='pop'>
   <div class="middle">
     <div class="inner" id='mediaplay'>
-<center>
+
 	<div class='infob'>
       <h1>Territory<sup>beta</sup></h1>
       <p>Claim it all!</p>
 	</div>
 	<hr>
-	<div id='game-pos'>Attempting to recieve information. If you see this for a minute, reload</div><br>
+	<button class='nav' onclick='navch(2);'>How to Play</button><button class='nav' onclick='navch(3);'>Your Info</button><button class='nav' onclick='navch(1);'>Credits</button>
+	<div id='game-pos'>Attempting to recieve information. Please wait</div><br>
 	<div id='game-score'></div><br>
 	<button onclick="unlock();" id='game-button' disabled>Begin</button>
-</center>
+
     </div>
   </div>
 </div>
+</center>
 	<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
 <div class='overlay' id='overlay'>
+</div>
+
+<div class='overlay-l' id='leaderboard'>
+	<b>Top Players</b>
 </div>
 
 </body>

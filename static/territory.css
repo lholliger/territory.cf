@@ -14,9 +14,13 @@ height: 100%;
     position: absolute;
     height: 100%;
     width: 100%;
-    	background:rgba(0,0,0,0.4); 
+    	background:rgba(0,0,0,0.4);
 }
-
+#color {
+	width:  90%;
+	border: 1px solid black;
+	padding: 5px;
+}
 .middle {
     display: table-cell;
     vertical-align: middle;
@@ -24,8 +28,9 @@ height: 100%;
 
 .inner {
     margin-left: auto;
-    margin-right: auto; 
-    width: 200px;
+    margin-right: auto;
+    /* max-width: 500px; */
+		 display:inline-block;
     background-color: white;
     color: black;
     padding: 10px;
@@ -38,14 +43,22 @@ button {
 	padding: 10px;
 	margin: 4px;
 	border-radius: 5px;
-	
+
+}
+
+button.nav {
+	background-color: lightgray;
+	border: none;
+	padding: 10px;
+	margin: 4px;
+	border-radius: 0px;
 }
 
 .overlay-l {
 	position: absolute;
-	bottom: 0
+	bottom: 0;
 	left: 0;
-	background:rgba(0,0,0,0.5); 
+	background:rgba(0,0,0,0.5);
 	margin: 1%;
 	padding: 0.5%;
 	color: white;
@@ -55,8 +68,15 @@ button {
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	background:rgba(0,0,0,0.5); 
+	background:rgba(0,0,0,0.5);
 	margin: 1%;
 	padding: 0.5%;
 	color: white;
+}
+
+
+a {
+
+	color: blue;
+	text-decoration: none;
 }
