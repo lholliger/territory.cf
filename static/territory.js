@@ -185,10 +185,14 @@ draw(x, y, "#757575");
 function update() {
 	var t1 = new Date();
 	t1 = t1.getTime();
-
+	var m2 = x + "x" + y;
+	map_data = map_data.filter(function(item) {
+		return (item[0] !== m2)
+	})
+	map_data = map_data.concat([[m2,color]]);
 
 	socket.emit("move", x + "," + y + "," + id);
-  redraw();
+	redraw();
 
 	var t2 = new Date();
 	t2 = t2.getTime();
