@@ -112,7 +112,11 @@ socket.on('new-info', function(msg){
 			var lead = msg;
 			var cache = "<b>Top Players</b><br>";
 			lead.forEach(function(entry) {
-				cache = cache + "<font color='" + entry[1] + "'>" + entry[0] + "</font><br>";
+				cache = cache + '<span style="font-size:12px; padding-left:12px; background:' + entry[1] +';">&nbsp;</span> ' + entry[0];
+				if (entry[1] == color) {
+					cache = cache + " <b>YOU</b>";
+				}
+				cache = cache + "<br>";
 			});
 			document.getElementById("leaderboard").innerHTML = cache;
 		    });
@@ -234,6 +238,19 @@ function update() {
 				move(3); // left
 			}
 			if (code == 39) {
+				move(4); // right
+			}
+
+			if (code == 87) {
+				move(1); // up
+			}
+			if (code == 83) {
+				move(2); // down
+			}
+			if (code == 65) {
+				move(3); // left
+			}
+			if (code == 68) {
 				move(4); // right
 			}
 			}
