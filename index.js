@@ -64,8 +64,8 @@ io.on('connection', function(socket){
     fs.writeFile(__dirname + "/lb/" + color, "0");
   }
   }
-  console.log(ocl);
-  if (ocl == "NaN") {
+
+  if (isNaN(ocl)) {
     ocl = countInArray(map_data, color);
     fs.writeFile(__dirname + "/lb/" + color, ocl);
   }
@@ -77,17 +77,15 @@ io.on('connection', function(socket){
     rcc = map_data.find(loc);
 
     var ocl;
-    if (rcc != null) {
-      try {
-    ocl = fs.readFileSync(__dirname + "/lb/" + rcc[1]);
-  } catch(err) {
-    if (err.code === 'ENOENT') {
-    fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
-    ocl = 0;
-  }
-  }
-  console.log(ocl);
-  if (ocl == "NaN") {
+    try {
+  ocl = fs.readFileSync(__dirname + "/lb/" + rcc[1]);
+} catch(err) {
+  if (err.code === 'ENOENT') {
+  fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
+  ocl = 0;
+}
+
+  if (isNaN(ocl)) {
     ocl = countInArray(map_data, color);
     fs.writeFile(__dirname + "/lb/" + rcc[1], ocl);
   }
