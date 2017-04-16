@@ -55,45 +55,6 @@ io.on('connection', function(socket){
     fs.writeFile(tdir + "x", claim[0]);
     fs.writeFile(tdir + "y", claim[1]);
     io.emit('new-claim', claim[0] + "," + claim[1] + ', "' + color + '"');
-    var ocl;
-    try {
-    ocl = fs.readFileSync(__dirname + "/lb/" + color);
-  } catch(err) {
-    if (err.code === 'ENOENT') {
-    ocl = 0;
-    fs.writeFile(__dirname + "/lb/" + color, "0");
-  }
-  }
-
-  if (isNaN(ocl)) {
-    ocl = countInArray(map_data, color);
-    fs.writeFile(__dirname + "/lb/" + color, ocl);
-  }
-    var rem = parseInt(ocl) + 1;
-    fs.writeFile(__dirname + "/lb/" + color, rem);
-    removal = claim[0] + "x" + claim[1];
-    var rcc = [];
-    rcc = map_data.find(loc);
-    console.log(rcc);
-    if (rcc != null) {
-    var ocl;
-    try {
-  ocl = fs.readFileSync(__dirname + "/lb/" + rcc[1]);
-} catch(err) {
-  if (err.code === 'ENOENT') {
-  fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
-  ocl = 0;
-}
-}
-
-  if (isNaN(ocl)) {
-    ocl = countInArray(map_data, color);
-    fs.writeFile(__dirname + "/lb/" + rcc[1], ocl);
-  }
-    var rem = parseInt(ocl) - 1;
-    fs.writeFile(__dirname + "/lb/" + rcc[1], rem);
-  }
-
     map_data = map_data.filter(function(item) {
   return (item[0] !== claim[0] + "x" + claim[1]) // Only keep arrays that don't begin with 5x3
 })
@@ -195,21 +156,40 @@ function Comparator(a, b) {
   return 0;
 }
 
+function inArray(arr) { // from http://jsfiddle.net/simevidas/bnACW/ i changed the name of the func though
+    var a = [], b = [], prev;
+
+    arr.sort();
+    for ( var i = 0; i < arr.length; i++ ) {
+        if ( arr[i] !== prev ) {
+            a.push(arr[i]);
+            b.push(1);
+        } else {
+            b[b.length-1]++;
+        }
+        prev = arr[i];
+    }
+
+    return [a, b];
+}
+
 
 setInterval(function() {
-  var files = fs.readdirSync(__dirname + "/lb/");
-var c1 = [];
-files.forEach(function(entry) {
-var cos, cos2;
-  try {
-  cos = entry;
-  cos2 = fs.readFileSync(__dirname + "/lb/" + entry, "utf8");
-} catch (err) {}
+var cc = map_data.toString();
+cc = cc.split(",");
+for (var i = 0; i <= cc.length; i += 1)
+    cc.splice(i, 1);
 
-    c1 = c1.concat([[cos2.replace(/\n|\r/g, ""), cos]]);
-});
+var res = inArray(cc);
+var occur = res[1];
+var found = res[0];
+
+var c1 = [];
+for (i = 0; i <= occur.length - 1; i++) {
+    c1 = c1.concat([[occur[i], found[i]]]);
+}
 
 c2 = c1.sort(Comparator);
-
+c2 = c2.slice(0,10);
 io.emit("leader", c2);
 }, 5000);
