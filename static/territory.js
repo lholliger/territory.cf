@@ -7,7 +7,9 @@ function unlock() {
 	document.getElementById('overlay').innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + "," + y;
 
 }
-var c = document.getElementById('game'),
+var width, height, blocksx, blocksy, canvas, c;
+function setUp() {
+c = document.getElementById('game'),
 canvas = c.getContext('2d');
 c.width = window.innerWidth;
 c.height = window.innerHeight;
@@ -39,7 +41,8 @@ canvas.fill();
 			tw = tw + 40;
 		}
 	}
-
+}
+setUp();
 
 function navch(bar) {
 	if (bar == 1) {
@@ -255,3 +258,7 @@ function update() {
 			}
 			}
 			document.onkeydown = checkKey;
+			window.onresize = function () {
+				setUp();
+				redraw();
+			}

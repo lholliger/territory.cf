@@ -25,9 +25,7 @@ io.on('connection', function(socket){
 
 
 io.on('connection', function(socket){
-
   socket.on('disconnect', function(){
-    console.log("SERVER: a user disconnected");
   });
 });
 
@@ -80,8 +78,10 @@ io.on('connection', function(socket){
   		c= fs.readFileSync(tdir + "color", "utf8");
   	} catch (err) {}
   	console.log("SERVER: sending info to user " + message + ": " +  x + "," + y + "," + c);
-  	this.emit("info", x + "," + y + "," + c);
+    this.emit("info", x + "," + y + "," + c);
     this.emit("gmap", map_data);
+    this.emit("leader", gLeader());
+
 
 	});
 });
@@ -171,24 +171,27 @@ function inArray(arr) { // from http://jsfiddle.net/simevidas/bnACW/ i changed t
     return [a, b];
 }
 
+function gLeader() {
+  var cc = map_data.toString();
+  cc = cc.split(",");
+  for (var i = 0; i <= cc.length; i += 1)
+      cc.splice(i, 1);
 
-setInterval(function() {
-var cc = map_data.toString();
-cc = cc.split(",");
-for (var i = 0; i <= cc.length; i += 1)
-    cc.splice(i, 1);
+  var res = inArray(cc);
+  var occur = res[1];
+  var found = res[0];
 
-var res = inArray(cc);
-var occur = res[1];
-var found = res[0];
+  var c1 = [];
+  for (i = 0; i <= occur.length - 1; i++) {
+      c1 = c1.concat([[occur[i], found[i]]]);
+  }
 
-var c1 = [];
-for (i = 0; i <= occur.length - 1; i++) {
-    c1 = c1.concat([[occur[i], found[i]]]);
+  c2 = c1.sort(sortNumber);
+  c2 = c2.reverse();
+  c2 = c2.slice(0,10);
+  return c2;
 }
 
-c2 = c1.sort(sortNumber);
-c2 = c2.reverse();
-c2 = c2.slice(0,10);
-io.emit("leader", c2);
+setInterval(function() {
+io.emit("leader", gLeader());
 }, 5000);
