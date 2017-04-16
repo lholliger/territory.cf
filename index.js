@@ -150,10 +150,8 @@ io.on('connection', function(socket){
 	});
 });
 
-function Comparator(a, b) {
-  if (a[1] < b[1]) return -1;
-  if (a[1] > b[1]) return 1;
-  return 0;
+function sortNumber(a,b) {
+    return a - b;
 }
 
 function inArray(arr) { // from http://jsfiddle.net/simevidas/bnACW/ i changed the name of the func though
@@ -189,7 +187,9 @@ for (i = 0; i <= occur.length - 1; i++) {
     c1 = c1.concat([[occur[i], found[i]]]);
 }
 
-c2 = c1.sort(Comparator);
+console.log(c1);
+c2 = c1.sort(sortNumber);
+console.log(c2);
 c2 = c2.slice(0,10);
 io.emit("leader", c2);
 }, 5000);

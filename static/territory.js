@@ -43,7 +43,7 @@ canvas.fill();
 
 function navch(bar) {
 	if (bar == 1) {
-		document.getElementById("game-pos").innerHTML = "<h3>Credits</h3><br><b>Lead Developer</b><br> <a href='https://github.com/DatOneLefty'>DatOneLefty</a><br><br><b>Game Idea</b><br>Lexumus<br><br><b>Links</b><br><b><a href='https://github.com/DatOneLefty/territory.cf'>Project GitHub</a></b><br><b><a href='https://gitter.im/territory-cf/Lobby'>Project Gitter</a></b>";
+		document.getElementById("game-pos").innerHTML = "<h3>Credits</h3><br><b>Lead Developer</b><br> <a href='https://github.com/DatOneLefty'>DatOneLefty</a><br><br><b>Game Idea</b><br>Lexumus<br><br><br><b>Developers</b><a href='https://github.com/bwbw223'>-stache-</a><br><br><b>Links</b><br><b><a href='https://github.com/DatOneLefty/territory.cf'>Project GitHub</a></b><br><b><a href='https://gitter.im/territory-cf/Lobby'>Project Gitter</a></b>";
 	}
 	if (bar == 2) {
 		document.getElementById("game-pos").innerHTML = "<h3>How To Play</h3>Use WASD or the arrow pad to move around, you will not automatically move<br><br>As you move, you claim territory. But, people can overclaim your territory though.<br><br>You cannot die and if you leave the game and come back, you will return to your exact position and have the same color<br>(Hit begin to start!)";
