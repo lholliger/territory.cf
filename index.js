@@ -55,7 +55,7 @@ io.on('connection', function(socket){
     fs.writeFile(tdir + "x", claim[0]);
     fs.writeFile(tdir + "y", claim[1]);
     io.emit('new-claim', claim[0] + "," + claim[1] + ', "' + color + '"');
-    var ocl
+    var ocl;
     try {
     ocl = fs.readFileSync(__dirname + "/lb/" + color);
   } catch(err) {
@@ -69,13 +69,13 @@ io.on('connection', function(socket){
     ocl = countInArray(map_data, color);
     fs.writeFile(__dirname + "/lb/" + color, ocl);
   }
-
     var rem = parseInt(ocl) + 1;
     fs.writeFile(__dirname + "/lb/" + color, rem);
     removal = claim[0] + "x" + claim[1];
     var rcc = [];
     rcc = map_data.find(loc);
-
+    console.log(rcc);
+    if (rcc != null) {
     var ocl;
     try {
   ocl = fs.readFileSync(__dirname + "/lb/" + rcc[1]);
@@ -83,6 +83,7 @@ io.on('connection', function(socket){
   if (err.code === 'ENOENT') {
   fs.writeFile(__dirname + "/lb/" + rcc[1], "0");
   ocl = 0;
+}
 }
 
   if (isNaN(ocl)) {
@@ -92,6 +93,7 @@ io.on('connection', function(socket){
     var rem = parseInt(ocl) - 1;
     fs.writeFile(__dirname + "/lb/" + rcc[1], rem);
   }
+
     map_data = map_data.filter(function(item) {
   return (item[0] !== claim[0] + "x" + claim[1]) // Only keep arrays that don't begin with 5x3
 })
