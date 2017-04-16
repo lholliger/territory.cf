@@ -151,7 +151,7 @@ io.on('connection', function(socket){
 });
 
 function sortNumber(a,b) {
-    return a - b;
+    return a[0] - b[0];
 }
 
 function inArray(arr) { // from http://jsfiddle.net/simevidas/bnACW/ i changed the name of the func though
@@ -187,9 +187,8 @@ for (i = 0; i <= occur.length - 1; i++) {
     c1 = c1.concat([[occur[i], found[i]]]);
 }
 
-console.log(c1);
 c2 = c1.sort(sortNumber);
-console.log(c2);
+c2 = c2.reverse();
 c2 = c2.slice(0,10);
 io.emit("leader", c2);
 }, 5000);
