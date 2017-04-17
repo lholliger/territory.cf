@@ -206,14 +206,34 @@ function update() {
 	var t3 = t2 - t1;
 	  document.getElementById('overlay').innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + "," + y;
 }
+
+function tooFarError() {
+	open = false;
+		    document.getElementById('pop').style.display = "block";
+				document.getElementById("game-pos").innerHTML = "<b>Oops!</b><br>You are not allowed to go past 1000 blocks, positive or negative, in any direction";
+				if (x > 999) {
+					x = 999;
+				}
+				if (x < -999) {
+					x = -999;
+				}
+				if (y > 999) {
+					y = 999;
+				}
+				if (y < -999) {
+					y = -999;
+				}
+				update();
+}
 		function move(d) {
 			if (open == true) {
+
 			if (d == 1) {
 				y++;
 				update();
 			}
 			if (d == 2) {
-				y--;
+				 y--;
 				update();
 			}
 			if (d == 3) {
@@ -224,8 +244,13 @@ function update() {
 				x++;
 				update();
 			}
+			if (x > 999 || x < -999 || y > 999 || y < -999) {
+				tooFarError();
+			}
 		}
+
 		}
+
 
 
 			function checkKey(e) {
