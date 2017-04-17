@@ -148,7 +148,20 @@ http.listen(port, function(){
   console.log('SERVER: initialized. listening on port ' + port);
 });
 
-
+io.on('connection', function(socket){
+  socket.on('check-account', function(message) {
+    var err = false;
+    try {
+      fs.readFileSync(__dirname + "/data/" + message + "/x", "utf8");
+    } catch(err) {
+      err = true;
+      this.emit("verified", "0");
+    }
+if (err == false) {
+        this.emit("verified", "1");
+}
+	});
+});
 
 io.on('connection', function(socket){
   socket.on('req-map', function(message) {

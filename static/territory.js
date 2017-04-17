@@ -1,6 +1,7 @@
 var open = false;
 var redo = 10;
 var cdraw = 0;
+  var socket = io();
 function unlock() {
 	open = true;
   document.getElementById('pop').style.display = "none";
@@ -62,8 +63,26 @@ function navch(bar) {
 	if (bar == 3) {
 		document.getElementById("game-pos").innerHTML = "<h3>Your info</h3><p><b>X:</b> " + x + "<br><b>Y:</b> " + y + "<br><br><div id='color' style='background-color: " + color + "'>Your Color</div>";
 	}
+	if (bar == 4) {
+		document.getElementById("game-pos").innerHTML = "<h3>Settings</h3><h4>Transfer Account</h4>Account Code: " + getCookie("id") + "<br><input id='reslog'></input><button onclick='transfer()'>Sign In</button>";
+	};
 
 }
+
+function transfer() {
+socket.emit("check-account", document.getElementById("reslog").value);
+}
+
+socket.on("verified", function(msg) {
+	if (msg == "1") {
+	setCookie("id", document.getElementById("reslog").value, 365 * 5);
+	location.reload();
+} else {
+		alert("ID not known");
+	setCookie("id", id, 365 * 5);
+
+}
+});
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -90,7 +109,6 @@ function getCookie(cname) {
 }
 
 
-  var socket = io();
 var id = "";
 if (getCookie("id") == "") {
 socket.emit("new-user", "help");
