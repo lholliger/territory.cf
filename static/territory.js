@@ -24,6 +24,14 @@ canvas.fill();
 	blocksx = Math.round(width / 40);
 	blocksy = Math.round(height / 40);
 
+if (blocksx < 10 || blocksy < 10) {
+if (blocksx > blocksy) {
+	redo = blocksy;
+}
+if (blocksy > blocksx) {
+	redo = blocksx;
+}
+}
 	var tw = 0;
 	var th = 0;
 
