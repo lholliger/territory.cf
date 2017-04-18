@@ -105,16 +105,6 @@ function remove(arr, what) {
     }
 }
 
-function file_get_cont(name) {
-  var chunk, data;
-  var readStream = fs.createReadStream(name, 'utf8');
-
-readStream.on('data', function(chunk) {
-    data += chunk;
-}).on('end', function() {
-    return data;
-});
-}
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max-min + 1)) + min;
 }
@@ -128,9 +118,9 @@ io.on('connection', function(socket){
 	});
 	var tdir = __dirname + "/data/" + ms + "/";
   var genc = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-	fs.writeFile(tdir + "color", genc);
-	fs.writeFile(tdir + "x", "0");
-	fs.writeFile(tdir + "y", "0");
+	fs.writeFileSync(tdir + "color", genc);
+	fs.writeFileSync(tdir + "x", "0");
+	fs.writeFileSync(tdir + "y", "0");
 	this.emit("new-info", ms);
 	console.log("SERVER: new user: " + ms);
 	});
