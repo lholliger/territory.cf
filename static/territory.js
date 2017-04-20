@@ -200,7 +200,7 @@ redraw();
 function redraw() {
 	cdraw++;
 	if (cdraw > redo) {
-		socket.emit("req-map", "");
+		socket.emit("req-map", x + "x" + y);
 		cdraw = 0;
 	}
 	var map = map_data;

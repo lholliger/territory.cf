@@ -130,7 +130,7 @@ io.on('connection', function(socket){
 setInterval(function() {
 fs.writeFile(__dirname + "/data/map", JSON.stringify(map_data));
 console.log("SERVER: map backed up");
-}, 30000);
+}, 60000);
 
 
 
@@ -155,7 +155,17 @@ if (err == false) {
 
 io.on('connection', function(socket){
   socket.on('req-map', function(message) {
-    this.emit("gmap", map_data);
+var md = message.split("x");
+var map = map_data;
+var maparea = [];
+
+map.forEach(function(element) {
+	var part = element[0].split("x");
+    if (part[0] <= md[0] + 50 && part[0]  >= md[0] - 50 && part[1] <= md[1] + 50 && part[1] >= md[1] - 50) {
+maparea = maparea.concat([element]);
+}
+});
+    this.emit("gmap", maparea);
 
 	});
 });
