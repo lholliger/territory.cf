@@ -22,7 +22,20 @@ io.on('connection', function(socket){
 
 });
 
+function print(msg, error=0) {
+  var date = new Date;
+  var stamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " " + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+  if (error == 0) {
+    console.log("[INFO " + stamp + "] " + msg);
+  }
+  if (error == 1) {
+        console.log("[FAIL " + stamp + "] " + msg);
+  }
+  if (error == 2) {
+        console.log("[FATAL " + stamp + "] " + msg);
+  }
 
+}
 
 io.on('connection', function(socket){
   socket.on('disconnect', function(){
@@ -52,9 +65,9 @@ io.on('connection', function(socket){
   var x = parseInt(claim[0]);
   var y = parseInt(claim[1]);
   if (x > 999 || x < -999 || y > 999 || y < -999) {
-    console.log("SERVER: player " + claim[2] + " tried to pass " + x + ", " + y);
+    print("player " + claim[2] + " tried to pass " + x + ", " + y);
   } else {
-    console.log("SERVER: claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2]);
+    print("claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2]);
     fs.writeFile(tdir + "x", x);
     fs.writeFile(tdir + "y", y);
     io.emit('new-claim', x + "," + y + ', "' + color + '"');
@@ -77,7 +90,7 @@ var removal;
 
 io.on('connection', function(socket){
   socket.on('new-join', function(message) {
-	console.log("SERVER: user join: " + message);
+	print("user join: " + message);
 
 	var tdir = __dirname + "/data/" + message + "/";
 	var x,y,c;
@@ -86,7 +99,7 @@ io.on('connection', function(socket){
   		y= fs.readFileSync(tdir + "y", "utf8");
   		c= fs.readFileSync(tdir + "color", "utf8");
   	} catch (err) {}
-  	console.log("SERVER: sending info to user " + message + ": " +  x + "," + y + "," + c);
+  	print("sending info to user " + message + ": " +  x + "," + y + "," + c);
     this.emit("info", x + "," + y + "," + c);
     this.emit("gmap", map_data);
     this.emit("leader", gLeader());
@@ -122,14 +135,13 @@ io.on('connection', function(socket){
 	fs.writeFileSync(tdir + "x", "0");
 	fs.writeFileSync(tdir + "y", "0");
 	this.emit("new-info", ms);
-	console.log("SERVER: new user: " + ms);
+	print("new user: " + ms);
 	});
 });
 
 
 setInterval(function() {
 fs.writeFile(__dirname + "/data/map", JSON.stringify(map_data));
-console.log("SERVER: map backed up");
 }, 60000);
 
 
@@ -215,5 +227,5 @@ setInterval(function() {
 
 
 http.listen(port, function(){
-  console.log('SERVER: initialized. listening on port ' + port);
+  print('Server started. listening on port ' + port);
 });
