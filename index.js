@@ -153,9 +153,9 @@ if (err == false) {
 io.on('connection', function(socket){
   socket.on('req-map', function(message) {
 var md = message.split("x");
+md = [parseInt(md[0]), parseInt(md[1])];
 var map = map_data;
 var maparea = [];
-
 map.forEach(function(element) {
 	var part = element[0].split("x");
     if (part[0] <= md[0] + 50 && part[0]  >= md[0] - 50 && part[1] <= md[1] + 50 && part[1] >= md[1] - 50) {
