@@ -22,7 +22,7 @@ io.on('connection', function(socket){
 
 });
 
-function print(msg, error=0) {
+function print(msg, error) {
   var date = new Date;
   var stamp = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + " " + date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
   if (error == 0) {
@@ -61,18 +61,20 @@ io.on('connection', function(socket){
     var tx = fs.readFileSync(tdir + "x", "utf8");
     var ty = fs.readFileSync(tdir + "y", "utf8");
     color = fs.readFileSync(tdir + "color", "utf8");
-  } catch (err) {}
+  } catch (err) {
+    print(err, 1);
+  }
   var x = parseInt(claim[0]);
   var y = parseInt(claim[1]);
   if (x > 999 || x < -999 || y > 999 || y < -999) {
-    print("player " + claim[2] + " tried to pass " + x + ", " + y);
+    print("player " + claim[2] + " tried to pass " + x + ", " + y, 0);
   } else {
-    print("claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2]);
+    print("claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2], 0);
     fs.writeFile(tdir + "x", x);
     fs.writeFile(tdir + "y", y);
     io.emit('new-claim', x + "," + y + ', "' + color + '"');
     map_data = map_data.filter(function(item) {
-  return (item[0] !== x + "x" + y) // Only keep arrays that don't begin with 5x3
+  return (item[0] !== x + "x" + y)
 })
 claim = [  parseInt(x) + "x" + parseInt(y) , color]
 map_data = map_data.concat([[claim[0],claim[1]]]);
@@ -90,7 +92,7 @@ var removal;
 
 io.on('connection', function(socket){
   socket.on('new-join', function(message) {
-	print("user join: " + message);
+	print("user join: " + message, 0);
 
 	var tdir = __dirname + "/data/" + message + "/";
 	var x,y,c;
@@ -98,8 +100,10 @@ io.on('connection', function(socket){
   		x= fs.readFileSync(tdir + "x", "utf8");
   		y= fs.readFileSync(tdir + "y", "utf8");
   		c= fs.readFileSync(tdir + "color", "utf8");
-  	} catch (err) {}
-  	print("sending info to user " + message + ": " +  x + "," + y + "," + c);
+  	} catch (err) {
+          print(err, 1);
+    }
+  	print("sending info to user " + message + ": " +  x + "," + y + "," + c, 0);
     this.emit("info", x + "," + y + "," + c);
     this.emit("gmap", map_data);
     this.emit("leader", gLeader());
@@ -135,7 +139,7 @@ io.on('connection', function(socket){
 	fs.writeFileSync(tdir + "x", "0");
 	fs.writeFileSync(tdir + "y", "0");
 	this.emit("new-info", ms);
-	print("new user: " + ms);
+	print("new user: " + ms, 0);
 	});
 });
 
@@ -227,5 +231,5 @@ setInterval(function() {
 
 
 http.listen(port, function(){
-  print('Server started. listening on port ' + port);
+  print('Server started. listening on port ' + port, 0);
 });
