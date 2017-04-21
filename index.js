@@ -134,9 +134,6 @@ console.log("SERVER: map backed up");
 
 
 
-http.listen(port, function(){
-  console.log('SERVER: initialized. listening on port ' + port);
-});
 
 io.on('connection', function(socket){
   socket.on('check-account', function(message) {
@@ -213,5 +210,10 @@ function gLeader() {
 }
 
 setInterval(function() {
-io.emit("leader", gLeader());
+ io.emit("leader", gLeader());
 }, 5000);
+
+
+http.listen(port, function(){
+  console.log('SERVER: initialized. listening on port ' + port);
+});
