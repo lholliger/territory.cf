@@ -1,0 +1,99 @@
+<script src="/socket.io/socket.io.js"></script>
+
+<canvas id='game'>Sorry, your browser does not support Territory (try using chrome)</canvas>
+
+
+<script>
+var blocksx = 2000;
+var blocksy = 2000;
+var open = false;
+var redo = 10;
+var cdraw = 0;
+var socket = io();
+c = document.getElementById('game'),
+canvas = c.getContext('2d');
+c.width = 2000;
+c.height = 2000;
+
+function redraw() {
+    cdraw++;
+    if (cdraw > redo) {
+        socket.emit("req-map", x + "x" + y);
+        cdraw = 0;
+    }
+    var map = map_data;
+    canvas.beginPath();
+    canvas.rect(0, 0, 2000, 2000);
+    canvas.fillStyle = "#1e1e1e";
+    canvas.fill();
+
+    map.forEach(function(element) {
+        piece = element[0].split("x");
+        draw(piece[0], piece[1], element[1]);
+    });
+    draw(x, y, "#757575");
+}
+
+function draw(x2, y2, scol) {
+    var corner_x = Math.round(x - (blocksx / 2));
+    var corner_y = Math.round(parseInt(y) + (blocksy / 2));
+    var corner_x_r = Math.round(parseInt(x) + (blocksx / 2));
+    var corner_y_r = Math.round(y - (blocksy / 2));
+    if (x2 >= corner_x && x2 <= corner_x_r) {
+        if (y2 <= corner_y && y2 >= corner_y_r) {
+            var gx = corner_x - x2;
+            var gy = corner_y - y2;
+            if (gx < 0) {
+                gx = -gx;
+            }
+            if (gy < 0) {
+                gy = -gy;
+            }
+
+            canvas.beginPath();
+            canvas.rect(gx, gy, 1, 1);
+            canvas.fillStyle = scol;
+            canvas.fill();
+        }
+    }
+
+
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+socket.emit("new-join", getCookie("id"));
+var id = getCookie("id");
+
+socket.on('info', function(msg) {
+    var inf = msg.split(",");
+    x = inf[0];
+    y = inf[1];
+    y = parseInt(y);
+    x = parseInt(x);
+    socket.emit("req-map-a", x + "x" + y);
+});
+
+var map_data, backup;
+
+socket.on('gmap', function(msg) {
+    map_data = msg;
+    redraw();
+
+});
+</script>

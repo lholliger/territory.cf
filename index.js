@@ -183,6 +183,14 @@ maparea = maparea.concat([element]);
 	});
 });
 
+io.on('connection', function(socket){
+  socket.on('req-map-a', function(message) {
+
+    this.emit("gmap", map_data);
+
+	});
+});
+
 function sortNumber(a,b) {
     return a[0] - b[0];
 }
