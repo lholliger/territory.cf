@@ -61,7 +61,7 @@ io.on('connection', function(socket){
     var tx = fs.readFileSync(tdir + "x", "utf8");
     var ty = fs.readFileSync(tdir + "y", "utf8");
     color = fs.readFileSync(tdir + "color", "utf8");
-  } catch (err) {
+    } catch (err) {
     print(err, 1);
   }
   var x = parseInt(claim[0]);
@@ -89,22 +89,32 @@ function loc(element) {
   return element[0] == removal;
 }
 var removal;
+io.on('connection', function(socket){
+  socket.on('add-alliance', function(message) {
+    var claim = message.split(",");
+    alliances = JSON.parse(fs.readFileSync(__dirname + "/data/"+ claim[0] + "/alliances", "utf8"));
+    alliances = alliances.concat(claim[1]);
+    fs.writeFileSync(__dirname + "/data/"+ claim[0] + "/alliances", JSON.stringify(alliances));
+    this.emit("alliance-made", claim[1]);
 
+  });
+});
 io.on('connection', function(socket){
   socket.on('new-join', function(message) {
 	print("user join: " + message, 0);
 
 	var tdir = __dirname + "/data/" + message + "/";
-	var x,y,c;
+	var x,y,c, alliances;
   	try {
   		x= fs.readFileSync(tdir + "x", "utf8");
   		y= fs.readFileSync(tdir + "y", "utf8");
   		c= fs.readFileSync(tdir + "color", "utf8");
+      alliances = fs.readFileSync(__dirname + "/data/"+ message+ "/alliances", "utf8");
   	} catch (err) {
           print(err, 1);
     }
   	print("sending info to user " + message + ": " +  x + "," + y + "," + c, 0);
-    this.emit("info", x + "," + y + "," + c);
+    this.emit("info", x + "|" + y + "|" + c + "|" + alliances);
     this.emit("gmap", map_data);
     this.emit("leader", gLeader());
 
@@ -138,6 +148,7 @@ io.on('connection', function(socket){
 	fs.writeFileSync(tdir + "color", genc);
 	fs.writeFileSync(tdir + "x", "0");
 	fs.writeFileSync(tdir + "y", "0");
+  fs.writeFileSync(tdir + "alliances", JSON.stringify([genc]));
 	this.emit("new-info", ms);
 	print("new user: " + ms, 0);
 	});

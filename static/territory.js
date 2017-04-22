@@ -66,9 +66,19 @@ function navch(bar) {
         document.getElementById("game-pos").innerHTML = "<h3>Your info</h3><p><b>X:</b> " + x + "<br><b>Y:</b> " + y + "<br><br><div id='color' style='background-color: " + color + "'>Your Color</div>";
     }
     if (bar == 4) {
-        document.getElementById("game-pos").innerHTML = "<h3>Settings</h3><h4>Transfer Account</h4>Account Code: " + getCookie("id") + "<br><input id='reslog'></input><button onclick='transfer()'>Sign In</button>";
+        document.getElementById("game-pos").innerHTML = "<h3>Settings</h3><h4>Transfer Account</h4>Account Code: " + getCookie("id") + "<br><input id='reslog'></input><button onclick='transfer()'>Sign In</button><br><b>Alliance Code: </b>" + color + "<br><input id='alliance'></input><button onclick='alliance()'>Alliance</button>";
+				if (alliances != []) {
+					document.getElementById("game-pos").innerHTML += "<br><b>Your Alliances</b><br>";
+				alliances.forEach(function(entry) {
+						document.getElementById("game-pos").innerHTML += '<span style="font-size:12px; padding-left:12px; background:' + entry + ';">&nbsp;</span> ';
+				});
+			}
     };
 
+}
+
+function alliance() {
+	socket.emit("add-alliance", id + "," +document.getElementById("alliance").value);
 }
 
 function transfer() {
@@ -118,13 +128,16 @@ if (getCookie("id") == "") {
     id = getCookie("id");
 }
 var x, y, color;
+alliances = [];
 socket.on('info', function(msg) {
-    var inf = msg.split(",");
+    var inf = msg.split("|");
     x = inf[0];
     y = inf[1];
     y = parseInt(y);
     x = parseInt(x);
     color = inf[2];
+		console.log(inf[3]);
+		alliances = JSON.parse(inf[3]);
     navch(3);
     document.getElementById("color").style.backgroundColor = color;
     document.getElementById("game-button").style.backgroundColor = color;
@@ -199,6 +212,11 @@ socket.on('gmap', function(msg) {
 
 });
 
+
+socket.on('alliance-made', function(msg) {
+    alert("alliance made with " + msg);
+
+});
 function redraw() {
     cdraw++;
     if (cdraw > redo) {
@@ -217,19 +235,34 @@ function redraw() {
     });
     draw(x, y, "#757575");
 }
+function isClaimed(element) {
+return JSON.stringify(element) == JSON.stringify([m2ca, cach_col]);
+}
+var cach_col, m2ca;
 
 function update() {
     var t1 = new Date();
     t1 = t1.getTime();
     var m2 = x + "x" + y;
+		m2ca = m2;
+		var allow_overwrite = true;
+alliances.forEach(function(element) {
+	cach_col = element;
+			if (map_data.findIndex(isClaimed) > -1) {
+				allow_overwrite = false;
+			}
+
+		});
+		if (allow_overwrite == true) {
     map_data = map_data.filter(function(item) {
-        return (item[0] !== m2)
+        return (item[0] !== m2);
     })
     map_data = map_data.concat([
         [m2, color]
     ]);
 
     socket.emit("move", x + "," + y + "," + id);
+	}
     redraw();
 
     var t2 = new Date();
