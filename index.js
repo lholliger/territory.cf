@@ -9,6 +9,12 @@ var port = 25500; // port for server to run on
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/static/index.html');
 });
+
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
+
+
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
