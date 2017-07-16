@@ -75,7 +75,7 @@ io.on('connection', function(socket){
   if (x > 999 || x < -999 || y > 999 || y < -999) {
     print("player " + claim[2] + " tried to pass " + x + ", " + y, 0);
   } else {
-    print("claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2], 0);
+    //print("claimed land: " + claim[0] + "," + claim[1] + " by " + claim[2], 0); removed for speed testing
     fs.writeFile(tdir + "x", x);
     fs.writeFile(tdir + "y", y);
     io.emit('new-claim', x + "," + y + ', "' + color + '"');
