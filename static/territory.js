@@ -7,6 +7,7 @@ function unlock() {
     open = true;
     document.getElementById('pop').style.display = "none";
     document.getElementById('overlay').innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + "," + y;
+  	socket.emit("req-map", x + "x" + y);
 
 }
 var width, height, blocksx, blocksy, canvas, c, localmovecache;
@@ -139,8 +140,6 @@ socket.on('info', function(msg) {
 		console.log(inf[3]);
 		alliances = JSON.parse(inf[3]);
     navch(3)
-	socket.emit("req-map", x + "x" + y);
-
     document.getElementById("color").style.backgroundColor = color;
     document.getElementById("game-button").style.backgroundColor = color;
     document.getElementById("game-button").disabled = false;
