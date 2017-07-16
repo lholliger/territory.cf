@@ -121,7 +121,6 @@ io.on('connection', function(socket){
     }
   	print("sending info to user " + message + ": " +  x + "," + y + "," + c, 0);
     this.emit("info", x + "|" + y + "|" + c + "|" + alliances);
-    this.emit("gmap", map_data);
     this.emit("leader", gLeader());
 
 
