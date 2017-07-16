@@ -262,7 +262,7 @@ alliances.forEach(function(element) {
     map_data = map_data.filter(function(item) {
         return (item[0] !== m2);
     });
-    localmovecache = localmovecache.concat([
+    localgamecache = localgamecache.concat([
         [m2, color]
     ]);
 
