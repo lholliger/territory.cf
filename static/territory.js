@@ -9,7 +9,7 @@ function unlock() {
     document.getElementById('overlay').innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + "," + y;
 
 }
-var width, height, blocksx, blocksy, canvas, c;
+var width, height, blocksx, blocksy, canvas, c, localmovecache;
 
 function setUp() {
     c = document.getElementById('game'),
@@ -233,6 +233,11 @@ function redraw() {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
     });
+	
+	 localgamecache.forEach(function(element) {
+        piece = element[0].split("x");
+        draw(piece[0], piece[1], element[1]);
+    });
     draw(x, y, "#757575");
 }
 function isClaimed(element) {
@@ -256,10 +261,11 @@ alliances.forEach(function(element) {
 		if (allow_overwrite == true) {
     map_data = map_data.filter(function(item) {
         return (item[0] !== m2);
-    })
-    map_data = map_data.concat([
+    });
+    localmovecache = localmovecache.concat([
         [m2, color]
     ]);
+
 
     socket.emit("move", x + "," + y + "," + id);
 	}
