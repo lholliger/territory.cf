@@ -8,7 +8,8 @@ function unlock() {
     document.getElementById('pop').style.display = "none";
     document.getElementById('overlay').innerHTML = "<center><button onclick='move(1)'>&uarr;</button><br><button onclick='move(3)'>&larr;</button><button> </button><button onclick='move(4)'>&rarr;</button><br><button onclick='move(2)'>&darr;</button></center><b>Position: </b>" + x + "," + y;
 }
-var width, height, blocksx, blocksy, canvas, c, localgamecache;
+var width, height, blocksx, blocksy, canvas, c;
+var localgamecache = [];
 
 function setUp() {
     c = document.getElementById('game'),
