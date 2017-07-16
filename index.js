@@ -117,8 +117,20 @@ io.on('connection', function(socket){
   		c= fs.readFileSync(tdir + "color", "utf8");
       alliances = fs.readFileSync(__dirname + "/data/"+ message+ "/alliances", "utf8");
   	} catch (err) {
+	var ms = message;
           print(err, 1);
+	mkdirp(__dirname + "/data/" + ms, function(err) {
+	});
+	var tdir = __dirname + "/data/" + ms + "/";
+  var genc = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+	fs.writeFileSync(tdir + "color", genc);
+	fs.writeFileSync(tdir + "x", "0");
+	fs.writeFileSync(tdir + "y", "0");
+  fs.writeFileSync(tdir + "alliances", JSON.stringify([genc]));
+	this.emit("new-info", ms);
+	print("fixed user: " + ms, 0);
     }
+	  
   	print("sending info to user " + message + ": " +  x + "," + y + "," + c, 0);
     this.emit("info", x + "|" + y + "|" + c + "|" + alliances);
     this.emit("leader", gLeader());
