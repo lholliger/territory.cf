@@ -138,7 +138,9 @@ socket.on('info', function(msg) {
     color = inf[2];
 		console.log(inf[3]);
 		alliances = JSON.parse(inf[3]);
-    navch(3);
+    navch(3)
+	socket.emit("req-map", x + "x" + y);
+
     document.getElementById("color").style.backgroundColor = color;
     document.getElementById("game-button").style.backgroundColor = color;
     document.getElementById("game-button").disabled = false;
