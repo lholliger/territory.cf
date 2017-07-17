@@ -2,7 +2,7 @@ var open = false;
 var redo = 10;
 var cdraw = 0;
 var socket = io();
-
+var gameStarted = false;
 function unlock() {
     open = true;
     document.getElementById('pop').style.display = "none";
@@ -143,7 +143,7 @@ socket.on('info', function(msg) {
     document.getElementById("game-button").style.backgroundColor = color;
     document.getElementById("game-button").disabled = false;
       	socket.emit("req-map", x + "x" + y);
-
+gameStarted = true;
 });
 
 socket.on('new-info', function(msg) {
@@ -193,6 +193,7 @@ function draw(x2, y2, scol) {
 }
 
 socket.on('new-claim', function(msg) {
+  if (gameStarted == true) {
     msg = JSON.parse("[" + msg + "]");
     var m2 = msg[0] + "x" + msg[1];
     map_data = map_data.filter(function(item) {
@@ -203,6 +204,7 @@ socket.on('new-claim', function(msg) {
     ]);
 
     draw(msg[0], msg[1], msg[3]);
+  }
 });
 
 
@@ -234,7 +236,7 @@ function redraw() {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
     });
-	
+
 	 localgamecache.forEach(function(element) {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
