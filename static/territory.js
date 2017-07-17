@@ -143,7 +143,6 @@ socket.on('info', function(msg) {
     document.getElementById("game-button").style.backgroundColor = color;
     document.getElementById("game-button").disabled = false;
       	socket.emit("req-map", x + "x" + y);
-gameStarted = true;
 });
 
 socket.on('new-info', function(msg) {
@@ -211,6 +210,7 @@ socket.on('new-claim', function(msg) {
 var map_data, backup;
 socket.on('gmap', function(msg) {
     map_data = msg;
+    gameStarted = true;
     redraw();
 
 });
