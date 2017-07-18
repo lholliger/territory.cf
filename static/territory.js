@@ -221,6 +221,8 @@ socket.on('alliance-made', function(msg) {
 
 });
 function redraw() {
+if (gameStarted == true) {
+
     cdraw++;
     if (cdraw > redo) {
         socket.emit("req-map", x + "x" + y);
@@ -242,6 +244,7 @@ function redraw() {
         draw(piece[0], piece[1], element[1]);
     });
     draw(x, y, "#757575");
+}
 }
 function isClaimed(element) {
 return JSON.stringify(element) == JSON.stringify([m2ca, cach_col]);
