@@ -202,9 +202,10 @@ socket.on('new-claim', function(msg) {
     map_data = map_data.concat([
         [m2, msg[2]]
     ]);
+	  /*
 positions[msg[2]].x = msg[0];
 positions[msg[2]].y = [msg[1]];
-		    
+		  */  
     draw(msg[0], msg[1], msg[2]);
     redraw();
 }
@@ -246,9 +247,11 @@ if (gameStarted == true) {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
     });
+	/*
 	Object.keys(positions).forEach(function(key) {
 	 draw(positions[key].x, positions[key].y, "#757575");
 });
+*/
 
 
 
