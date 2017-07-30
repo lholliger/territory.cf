@@ -233,16 +233,17 @@ if (gameStarted == true) {
     canvas.rect(0, 0, window.innerWidth, window.innerHeight);
     canvas.fillStyle = "#1e1e1e";
     canvas.fill();
-
+	 localgamecache.forEach(function(element) {
+        piece = element[0].split("x");
+        draw(piece[0], piece[1], element[1]);
+    });
+	
     map.forEach(function(element) {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
     });
 
-	 localgamecache.forEach(function(element) {
-        piece = element[0].split("x");
-        draw(piece[0], piece[1], element[1]);
-    });
+
     draw(x, y, "#757575");
 }
 }
