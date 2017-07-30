@@ -199,10 +199,10 @@ socket.on('new-claim', function(msg) {
         return (item[0] !== m2)
     })
     map_data = map_data.concat([
-        [m2, msg[3]]
+        [m2, msg[2]]
     ]);
 
-    draw(msg[0], msg[1], msg[3]);
+    draw(msg[0], msg[1], msg[2]);
   }
 });
 
