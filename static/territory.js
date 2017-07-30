@@ -208,7 +208,6 @@ positions.msg[2].y = [msg[1]];
     draw(msg[0], msg[1], msg[2]);
     redraw();
 }
-  }
 });
 
 
