@@ -129,6 +129,7 @@ if (getCookie("id") == "") {
 }
 var x, y, color;
 alliances = [];
+var positions = [];
 socket.on('info', function(msg) {
     var inf = msg.split("|");
     x = inf[0];
@@ -202,8 +203,13 @@ socket.on('new-claim', function(msg) {
         [m2, msg[2]]
     ]);
 if (msg[2] != color) {
-
+	positions.filter(function(item) {
+        return (item[2] !== msg[2])
+    })
+	
+    positions.concat([[msg[0], msg[1], msg[2]]]);
     draw(msg[0], msg[1], msg[2]);
+    redraw();
 }
   }
 });
@@ -243,6 +249,10 @@ if (gameStarted == true) {
     map.forEach(function(element) {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
+    });
+	
+	    positions.forEach(function(element) {
+        draw(element[0], element[1], "#757575");
     });
 
 
