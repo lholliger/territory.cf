@@ -129,7 +129,7 @@ if (getCookie("id") == "") {
 }
 var x, y, color;
 alliances = [];
-var positions = [];
+var positions = new Object();
 socket.on('info', function(msg) {
     var inf = msg.split("|");
     x = inf[0];
@@ -202,12 +202,9 @@ socket.on('new-claim', function(msg) {
     map_data = map_data.concat([
         [m2, msg[2]]
     ]);
-if (msg[2] != color) {
-	positions = positions.filter(function(item) {
-        return (item[2] !== msg[2])
-    })
-	
-    positions = positions.concat([[msg[0], msg[1], msg[2]]]);
+positions.msg[2].x = msg[0];
+positions.msg[2].y = [msg[1]];
+		    
     draw(msg[0], msg[1], msg[2]);
     redraw();
 }
@@ -250,10 +247,10 @@ if (gameStarted == true) {
         piece = element[0].split("x");
         draw(piece[0], piece[1], element[1]);
     });
-	
-	    positions.forEach(function(element) {
-        draw(element[0], element[1], "#757575");
-    });
+	Object.keys(positions).forEach(function(key) {
+	 draw(positions[key].x, positions[key].y, "#757575");
+});
+
 
 
     draw(x, y, "#757575");
