@@ -207,7 +207,7 @@ if (msg[2] != color) {
         return (item[2] !== msg[2])
     })
 	
-    positions.concat([[msg[0], msg[1], msg[2]]]);
+    positions = positions.concat([[msg[0], msg[1], msg[2]]]);
     draw(msg[0], msg[1], msg[2]);
     redraw();
 }
