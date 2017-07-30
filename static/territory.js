@@ -202,8 +202,8 @@ socket.on('new-claim', function(msg) {
     map_data = map_data.concat([
         [m2, msg[2]]
     ]);
-positions.msg[2].x = msg[0];
-positions.msg[2].y = [msg[1]];
+positions[msg[2]].x = msg[0];
+positions[msg[2]].y = [msg[1]];
 		    
     draw(msg[0], msg[1], msg[2]);
     redraw();
