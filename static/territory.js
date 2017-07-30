@@ -201,8 +201,10 @@ socket.on('new-claim', function(msg) {
     map_data = map_data.concat([
         [m2, msg[2]]
     ]);
+if (msg[2] != color) {
 
     draw(msg[0], msg[1], msg[2]);
+}
   }
 });
 
