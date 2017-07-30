@@ -203,7 +203,7 @@ socket.on('new-claim', function(msg) {
         [m2, msg[2]]
     ]);
 if (msg[2] != color) {
-	positions.filter(function(item) {
+	positions = positions.filter(function(item) {
         return (item[2] !== msg[2])
     })
 	
